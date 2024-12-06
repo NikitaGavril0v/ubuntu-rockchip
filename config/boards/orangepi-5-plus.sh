@@ -36,6 +36,10 @@ function config_image_hook__orangepi-5-plus() {
         # Install wiring orangepi package 
         chroot "${rootfs}" apt-get -y install wiringpi-opi libwiringpi2-opi libwiringpi-opi-dev
         echo "BOARD=orangepi5plus" > "${rootfs}/etc/orangepi-release"
+
+        # Install OBS with gstreamer plugin
+        cp "${overlay}/usr/lib/scripts/install-obs.sh" "${rootfs}/usr/lib/scripts/install-obs.sh"
+        chroot "${rootfs}" /usr/lib/scripts/install-obs.sh
     fi
 
     return 0
