@@ -46,6 +46,7 @@ cmake --build . --target package
 sudo apt install -y ./obs-studio-*.deb
 cd
 # Установка obs-gstreamer:
+sudo apt install -y meson
 git clone https://github.com/fzwoch/obs-gstreamer.git
 cd ~/obs-gstreamer
 meson --buildtype=release build
