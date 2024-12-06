@@ -1,8 +1,8 @@
+---
 name: Feature Request
 description: Suggest a feature that you would like to see implemented.
 title: "Feature Request: "
 labels: ["enhancement"]
-assignees: "Joshua-Riek"
 body:
   - type: markdown
     attributes:
