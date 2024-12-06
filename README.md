@@ -44,5 +44,20 @@ There are a few things you can do to support the project:
 
 These things motivate me to continue development and provide validation that my work is appreciated. Thanks in advance!
 
+## Build
+1. Install build tools.
+```
+sudo apt-get install -y build-essential gcc-aarch64-linux-gnu bison \
+qemu-user-static qemu-system-arm qemu-efi-aarch64 u-boot-tools binfmt-support \
+debootstrap flex libssl-dev bc rsync kmod cpio xz-utils fakeroot parted \
+udev dosfstools uuid-runtime git-lfs device-tree-compiler python3 \
+python-is-python3 fdisk bc debhelper python3-pyelftools python3-setuptools \
+python3-pkg-resources swig libfdt-dev libpython3-dev \
+git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison gawk dwarves
+```
+2. Run build.sh.
+```
+sudo ./build.sh --board=orangepi-5-plus --suite=jammy --flavor=desktop
+```
 ---
 > Ubuntu is a trademark of Canonical Ltd. Rockchip is a trademark of Fuzhou Rockchip Electronics Co., Ltd. The Ubuntu Rockchip project is not affiliated with Canonical Ltd or Fuzhou Rockchip Electronics Co., Ltd. All other product names, logos, and brands are property of their respective owners. The Ubuntu name is owned by [Canonical Limited](https://ubuntu.com/).
