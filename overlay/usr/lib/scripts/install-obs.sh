@@ -44,6 +44,7 @@ cmake -S . -B ~/obs-build -G Ninja \
 cd ~/obs-build
 cmake --build . --target package
 sudo apt install -y ./obs-studio-*.deb
+sudo apt-mark hold obs-studio
 cd
 # Установка obs-gstreamer:
 sudo apt install -y meson
@@ -56,3 +57,28 @@ sudo mv obs-gstreamer.so /usr/local/lib/obs-plugins/
 # Установка gstreamer c mpp:
 sudo apt --no-install-recommends install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-gl
 sudo apt install -y gstreamer1.0-rockchip1 librga-dev librga2 librockchip-mpp-dev librockchip-mpp1 librockchip-vpu0 libv4l-rkmpp rockchip-multimedia-config libgl4es libgl4es-dev libdri2to3
+
+# Установка Source Record
+cd ~/
+git clone https://github.com/exeldro/obs-source-record.git
+cd ~/obs-source-record
+cmake -S . -B build -DBUILD_OUT_OF_TREE=On && cmake --build build
+cd build
+sudo mv source-rekord.so /usr/local/lib/obs-plugins/
+
+# Установка Color Monitor
+cd ~/
+git clone https://github.com/norihiro/obs-color-monitor.git
+cmake -S . -B build && cmake --build build
+cd build
+sudo mv obs-color-monitor.so /usr/local/lib/obs-plugins/
+
+# Установка NDI
+
+# Установка DistroAV
+#cd ~
+#git clone https://github.com/DistroAV/DistroAV.git
+#cd DistroAV
+#.github/scripts/build-linux --skip-deps
+#.github/scripts/package-linux --package
+#sudo dpkg -i release/distroav*.deb
