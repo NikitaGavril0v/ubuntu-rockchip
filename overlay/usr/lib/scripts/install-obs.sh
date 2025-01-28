@@ -69,6 +69,7 @@ sudo mv source-rekord.so /usr/local/lib/obs-plugins/
 # Установка Color Monitor
 cd ~/
 git clone https://github.com/norihiro/obs-color-monitor.git
+cd obs-color-monitor
 cmake -S . -B build && cmake --build build
 cd build
 sudo mv obs-color-monitor.so /usr/local/lib/obs-plugins/
