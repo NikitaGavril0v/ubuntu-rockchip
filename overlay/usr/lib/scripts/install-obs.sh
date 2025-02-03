@@ -88,7 +88,6 @@ cd DistroAV
 sudo dpkg -i release/distroav*.deb
 sudo apt install -y avahi-daemon ffmpeg
 sudo systemctl enable avahi-daemon
-sudo systemctl start avahi-daemon
 sudo ufw allow 5353/udp
 sudo ufw allow 5959:5969/tcp
 sudo ufw allow 5959:5969/udp
