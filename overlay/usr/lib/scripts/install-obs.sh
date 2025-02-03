@@ -76,12 +76,24 @@ cmake -S . -B build && cmake --build build
 cd build
 sudo mv obs-color-monitor.so /usr/local/lib/obs-plugins/
 
-# Установка NDI
+# Установка NDI SDK
+/usr/lib/scripts/libndi-get.sh
 
 # Установка DistroAV
-#cd ~
-#git clone https://github.com/DistroAV/DistroAV.git
-#cd DistroAV
-#.github/scripts/build-linux --skip-deps
-#.github/scripts/package-linux --package
-#sudo dpkg -i release/distroav*.deb
+cd ~
+git clone https://github.com/DistroAV/DistroAV.git
+cd DistroAV
+.github/scripts/build-linux --skip-deps
+.github/scripts/package-linux --package
+sudo dpkg -i release/distroav*.deb
+sudo apt install avahi-daemon ffmpeg
+sudo systemctl enable avahi-daemon
+sudo systemctl start avahi-daemon
+sudo ufw allow 5353/udp
+sudo ufw allow 5959:5969/tcp
+sudo ufw allow 5959:5969/udp
+sudo ufw allow 6960:6970/tcp
+sudo ufw allow 6960:6970/udp
+sudo ufw allow 7960:7970/tcp
+sudo ufw allow 7960:7970/udp
+sudo ufw allow 5960/tcp
