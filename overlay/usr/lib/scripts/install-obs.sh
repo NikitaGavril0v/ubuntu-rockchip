@@ -66,7 +66,7 @@ git clone https://github.com/exeldro/obs-source-record.git
 cd ~/obs-source-record
 cmake -S . -B build -DBUILD_OUT_OF_TREE=On && cmake --build build
 cd build
-sudo mv source-rekord.so /usr/local/lib/obs-plugins/
+sudo mv source-record.so /usr/local/lib/obs-plugins/
 
 # Установка Color Monitor
 cd ~/
