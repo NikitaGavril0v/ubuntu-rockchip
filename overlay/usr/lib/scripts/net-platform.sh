@@ -43,8 +43,9 @@ dhcp-option=option:router,192.168.11.1
 # Add NTP server to DHCP
 dhcp-option=option:ntp-server,0.0.0.0" > /etc/dnsmasq.d/99-pts-lan.conf
 echo 1 > /proc/sys/net/ipv4/ip_forward
+iptables -A INPUT -i lo -j ACCEPT
 #Настроим правила для LAN.
-iptables -A FORWARD -i ${ports[1]} -o ${ports[0]} -j ACCEPT
+iptables -A INPUT -i ${ports[1]} -j ACCEPT
 iptables -A FORWARD -i ${ports[0]} -o ${ports[1]} -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 #Настроим правила для WLAN.
 #iptables -A FORWARD -i wlan0 -o ${ports[0]} -j ACCEPT
