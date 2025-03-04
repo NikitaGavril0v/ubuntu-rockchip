@@ -34,9 +34,14 @@ curl -sSL https://install.pi-hole.net | bash
 pihole setpassword
 pihole -a enabledhcp "192.168.11.50" "192.168.11.200" "192.168.11.1" "24" "local"
 touch /etc/dnsmasq.d/99-pts-lan.conf
-echo "dhcp-range=${ports[1]},192.168.11.50,192.168.11.254
-dhcp-option=${ports[1]},3,192.168.11.1
-dhcp-option=${ports[1]},6,192.168.11.1" > /etc/dnsmasq.d/99-pts-lan.conf
+echo "# DHCP server setting
+dhcp-authoritative
+dhcp-leasefile=/etc/pihole/dhcp.leases
+dhcp-range=192.168.11.50,192.168.11.254,255.255.255.0
+dhcp-option=option:router,192.168.11.1
+
+# Add NTP server to DHCP
+dhcp-option=option:ntp-server,0.0.0.0" > /etc/dnsmasq.d/99-pts-lan.conf
 echo 1 > /proc/sys/net/ipv4/ip_forward
 #Настроим правила для LAN.
 iptables -A FORWARD -i ${ports[1]} -o ${ports[0]} -j ACCEPT
