@@ -26,9 +26,6 @@ echo "network:
     ${ports[1]}:
       addresses:
         - 192.168.11.1/24
-      routes:
-        - to: default
-          via: 192.168.11.1
       nameservers:
           search: [google, googleAlt]
           addresses: [8.8.8.8, 8.8.4.4]" > /etc/netplan/99_config.yaml
