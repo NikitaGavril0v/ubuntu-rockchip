@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Установка wiringOp-Python для переключения режимов свитч/роутер
+apt install -y python3 python3-pip swig python3-dev python3-setuptools
+git clone --recursive https://github.com/orangepi-xunlong/wiringOP-Python.git
+cd wiringOP-Python
+python3 generate-bindings.py > bindings.i
+sudo python3 setup.py install
 #Получаем имена сетевых интерфейсов и записываем в ports
 names=$(lshw -class network -businfo | grep -o "[0-9]:[0-9][0-9]")
 ps=$(echo $names | grep -o "[0-9]:")
@@ -48,13 +54,6 @@ iptables -A FORWARD -i ${ports[0]} -o ${ports[1]} -m conntrack --ctstate RELATED
 #Настроим MASQUERADE.
 iptables -t nat -A POSTROUTING -o ${ports[0]} -j MASQUERADE
 echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
-iptables-save > /etc/iptables.rules
-touch /etc/network/if-pre-up.d/iptables
-echo "#!/bin/sh
-
-set -e
-
-iptables-restore < /etc/iptables.rules
-exit 0" > /etc/network/if-pre-up.d/iptables
-chmod a+x /etc/network/if-pre-up.d/iptables
+apt install -y iptables-persistent
+/etc/init.d/netfilter-persistent save
 netplan apply
