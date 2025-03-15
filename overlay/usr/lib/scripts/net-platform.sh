@@ -39,19 +39,9 @@ echo "network:
   renderer: NetworkManager
   ethernets:
     enP4p65s0:
-      dhcp4: no
+      dhcp4: yes
     enP3p49s0:
-      dhcp4: no
-  bridges:
-    br0:
-      interfaces: [enP3p49s0, enP4p65s0]
-      addresses:
-        - 192.168.11.2/24
-      routes:
-        - to: default
-          via: 192.168.11.1
-      nameservers:
-        addresses: [8.8.8.8, 8.8.4.4]" > /etc/netplan/99-switch-config.saved
+      dhcp4: yes" > /etc/netplan/99-switch-config.saved
 #Установка PiHole
 git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
 cd "Pi-hole/automated install/"
@@ -78,10 +68,10 @@ apt install -y iptables-persistent
 /etc/init.d/netfilter-persistent save
 netplan apply
 # Создадим скрипты для переключения режимов свитч/роутер
-touch ./router.sh
-touch ./switch.sh
-chmod +x ./router.sh
-chmod +x ./switch.sh
+touch /usr/lib/scripts/router.sh
+touch /usr/lib/scripts/switch.sh
+chmod +x /usr/lib/scripts/router.sh
+chmod +x /usr/lib/scripts/switch.sh
 echo "#!/bin/bash
 
 iptables -A FORWARD -i ${ports[1]} -o ${ports[0]} -j ACCEPT
@@ -90,14 +80,14 @@ iptables -t nat -A POSTROUTING -o ${ports[0]} -j MASQUERADE
 systemctl start pihole-FTL.service
 mv /etc/netplan/99-router-config.saved /etc/netplan/99_config.yaml
 mv /etc/netplan/99-switch-config.yaml /etc/netplan/99-switch-config.saved
-netplan apply" > ./router.sh
+netplan apply" > /usr/lib/scripts/router.sh
 echo "#!/bin/bash
 iptables -t nat -F
 iptables -F
 systemctl stop pihole-FTL.service
 mv /etc/netplan/99-router-config.yaml /etc/netplan/99_config.saved
 mv /etc/netplan/99-switch-config.saved /etc/netplan/99-switch-config.yaml
-netplan apply" > ./switch.sh
+netplan apply" > /usr/lib/scripts/switch.sh
 # Создадим юнит systemd
 touch /etc/systemd/system/net-mode-switcher.service
 echo "[Unit]
