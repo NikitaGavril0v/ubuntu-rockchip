@@ -32,7 +32,7 @@ echo "network:
   ethernets:
     ${ports[1]}:
       addresses:
-        - 192.168.11.1/24" > /etc/netplan/99_config.yaml
+        - 192.168.11.1/24" > /etc/netplan/99-router-config.yaml
 touch /etc/netplan/99-switch-config.saved
 echo "network:
   version: 2
@@ -64,8 +64,8 @@ iptables -A FORWARD -i ${ports[0]} -o ${ports[1]} -m conntrack --ctstate RELATED
 #Настроим MASQUERADE.
 iptables -t nat -A POSTROUTING -o ${ports[0]} -j MASQUERADE
 echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
-apt install -y iptables-persistent
-/etc/init.d/netfilter-persistent save
+#apt install -y iptables-persistent
+#/etc/init.d/netfilter-persistent save
 netplan apply
 # Создадим скрипты для переключения режимов свитч/роутер
 touch /usr/lib/scripts/router.sh
