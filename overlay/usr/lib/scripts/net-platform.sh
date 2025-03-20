@@ -47,16 +47,6 @@ git clone --depth 1 https://github.com/pi-hole/pi-hole.git Pi-hole
 cd "Pi-hole/automated install/"
 bash basic-install.sh
 pihole setpassword
-sed -i 's/etc_dnsmasq_d = false/etc_dnsmasq_d = true/' /etc/pihole/pihole.toml
-touch /etc/dnsmasq.d/99-pts-lan.conf
-echo "# DHCP server setting
-dhcp-authoritative
-dhcp-leasefile=/etc/pihole/dhcp.leases
-dhcp-range=192.168.11.50,192.168.11.254,255.255.255.0
-dhcp-option=option:router,192.168.11.1
-
-# Add NTP server to DHCP
-dhcp-option=option:ntp-server,0.0.0.0" > /etc/dnsmasq.d/99-pts-lan.conf
 echo 1 > /proc/sys/net/ipv4/ip_forward
 #Настроим правила для LAN.
 iptables -A FORWARD -i ${ports[1]} -o ${ports[0]} -j ACCEPT
@@ -78,14 +68,14 @@ iptables -A FORWARD -i ${ports[1]} -o ${ports[0]} -j ACCEPT
 iptables -A FORWARD -i ${ports[0]} -o ${ports[1]} -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 iptables -t nat -A POSTROUTING -o ${ports[0]} -j MASQUERADE
 systemctl start pihole-FTL.service
-mv /etc/netplan/99-router-config.saved /etc/netplan/99_config.yaml
+mv /etc/netplan/99-router-config.saved /etc/netplan/99-router-config.yaml.yaml
 mv /etc/netplan/99-switch-config.yaml /etc/netplan/99-switch-config.saved
 netplan apply" > /usr/lib/scripts/router.sh
 echo "#!/bin/bash
 iptables -t nat -F
 iptables -F
 systemctl stop pihole-FTL.service
-mv /etc/netplan/99-router-config.yaml /etc/netplan/99_config.saved
+mv /etc/netplan/99-router-config.yaml /etc/netplan/99-router-config.yaml.saved
 mv /etc/netplan/99-switch-config.saved /etc/netplan/99-switch-config.yaml
 netplan apply" > /usr/lib/scripts/switch.sh
 # Создадим юнит systemd
