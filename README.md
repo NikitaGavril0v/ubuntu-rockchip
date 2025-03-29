@@ -46,7 +46,7 @@ These things motivate me to continue development and provide validation that my 
 
 ## Build
 1. Install build tools.
-```
+```bash
 sudo apt-get install -y build-essential gcc-aarch64-linux-gnu bison \
 qemu-user-static qemu-system-arm qemu-efi-aarch64 u-boot-tools binfmt-support \
 debootstrap flex libssl-dev bc rsync kmod cpio xz-utils fakeroot parted \
@@ -56,7 +56,13 @@ python3-pkg-resources swig libfdt-dev libpython3-dev \
 git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison gawk dwarves
 ```
 2. Run build.sh.
+```bash
+sudo ./build.sh --board=orangepi-5-plus --suite=jammy --flavor=desktop -ko
 ```
+```bash
+sudo ./build.sh --board=orangepi-5-plus --suite=jammy --flavor=desktop -uo
+```
+```bash
 sudo ./build.sh --board=orangepi-5-plus --suite=jammy --flavor=desktop
 ```
 ---
