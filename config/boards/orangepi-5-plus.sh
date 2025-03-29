@@ -42,8 +42,10 @@ function config_image_hook__orangepi-5-plus() {
         cp "${overlay}/usr/lib/scripts/libndi-get.sh" "${rootfs}/usr/lib/scripts/libndi-get.sh"
         cp "${overlay}/usr/lib/scripts/net-platform.sh" "${rootfs}/usr/lib/scripts/net-platform.sh"
         cp "${overlay}/usr/lib/scripts/net-mode-switcher.py" "${rootfs}/usr/lib/scripts/net-mode-switcher.py"
+        cp "${overlay}/usr/lib/scripts/install-companion.sh" "${rootfs}/usr/lib/scripts/install-companion.sh"
         chroot "${rootfs}" /usr/lib/scripts/install-obs.sh
         chroot "${rootfs}" /usr/lib/scripts/net-platform.sh
+        chroot "${rootfs}" /usr/lib/scripts/install-companion.sh
     fi
 
     return 0
